@@ -1,25 +1,112 @@
-import logo from './logo.svg';
-import './App.css';
+import { Component } from "react";
+import { Route, Routes } from "react-router-dom";
+import LoginForm from "./components/LoginRoute";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import "./App.css";
+import Cart from "./components/Cart";
+import Home from "./components/Home";
+import Products from "./components/Products";
+import ProductItemDetails from "./components/ProductItemDetails";
+import CartContext from "./Context";
+
+class App extends Component {
+  state = {
+    cartList: [],
+  };
+
+  removeAllCartItems = () => {
+    this.setState({ cartList: [] });
+  };
+
+  incrementCartItemQuantity = (id) => {
+    this.setState((prevState) => ({
+      cartList: prevState.cartList.map((eachCartItem) => {
+        if (id === eachCartItem.id) {
+          const updatedQuantity = eachCartItem.quantity + 1;
+          return { ...eachCartItem, quantity: updatedQuantity };
+        }
+        return eachCartItem;
+      }),
+    }));
+  };
+
+  decrementCartItemQuantity = (id) => {
+    const { cartList } = this.state;
+    const productObject = cartList.find(
+      (eachCartItem) => eachCartItem.id === id
+    );
+    if (productObject.quantity > 1) {
+      this.setState((prevState) => ({
+        cartList: prevState.cartList.map((eachCartItem) => {
+          if (id === eachCartItem.id) {
+            const updatedQuantity = eachCartItem.quantity - 1;
+            return { ...eachCartItem, quantity: updatedQuantity };
+          }
+          return eachCartItem;
+        }),
+      }));
+    } else {
+      this.removeCartItem(id);
+    }
+  };
+
+  removeCartItem = (id) => {
+    const { cartList } = this.state;
+    const updatedCartList = cartList.filter(
+      (eachCartItem) => eachCartItem.id !== id
+    );
+
+    this.setState({ cartList: updatedCartList });
+  };
+
+  addCartItem = (product) => {
+    const { cartList } = this.state;
+    const productObject = cartList.find(
+      (eachCartItem) => eachCartItem.id === product.id
+    );
+
+    if (productObject) {
+      this.setState((prevState) => ({
+        cartList: prevState.cartList.map((eachCartItem) => {
+          if (productObject.id === eachCartItem.id) {
+            const updatedQuantity = eachCartItem.quantity + product.quantity;
+
+            return { ...eachCartItem, quantity: updatedQuantity };
+          }
+
+          return eachCartItem;
+        }),
+      }));
+    } else {
+      const updatedCartList = [...cartList, product];
+
+      this.setState({ cartList: updatedCartList });
+    }
+  };
+
+  render() {
+    const { cartList } = this.state;
+    return (
+      <CartContext.Provider
+        value={{
+          cartList,
+          addCartItem: this.addCartItem,
+          removeCartItem: this.removeCartItem,
+          incrementCartItemQuantity: this.incrementCartItemQuantity,
+          decrementCartItemQuantity: this.decrementCartItemQuantity,
+          removeAllCartItems: this.removeAllCartItems,
+        }}
+      >
+        <Routes>
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/products/:id" element={<ProductItemDetails />} />
+          <Route path="/cart" element={<Cart />} />
+        </Routes>
+      </CartContext.Provider>
+    );
+  }
 }
 
 export default App;
