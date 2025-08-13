@@ -1,4 +1,6 @@
+import { Link } from "react-router-dom";
 import CartContext from "../../Context";
+
 import "./index.css";
 
 const CartSummary = () => (
@@ -11,21 +13,19 @@ const CartSummary = () => (
       });
 
       return (
-        <>
-          <div className="cart-summary-container">
-            <h1 className="order-total-value">
-              <span className="order-total-label">Order Total:</span> Rs {total}
-              /-
-            </h1>
-            <p className="total-items">{cartList.length} Items in cart</p>
-            <button type="button" className="checkout-button d-sm-none">
+        <div className="cart-summary-container">
+          <h1 className="order-total-value">
+            <span className="order-total-label">Order Total:</span> Rs {total}/-
+          </h1>
+          <p className="total-items">{cartList.length} Items in cart</p>
+
+          {/* Checkout button */}
+          <Link to={cartList.length > 0 ? "/payment" : "#"}>
+            <button type="button" className="checkout-button">
               Checkout
             </button>
-          </div>
-          <button type="button" className="checkout-button d-lg-none">
-            Checkout
-          </button>
-        </>
+          </Link>
+        </div>
       );
     }}
   </CartContext.Consumer>

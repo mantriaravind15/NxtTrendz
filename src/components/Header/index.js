@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import "./index.css";
+import CartContext from "../../Context";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -9,6 +10,8 @@ const Header = () => {
     Cookies.remove("jwt_token");
     navigate("/login", { replace: true }); // same as history.replace
   };
+
+
 
   return (
     <nav className="nav-header">
@@ -50,9 +53,16 @@ const Header = () => {
                 Products
               </Link>
             </li>
+       
             <li className="nav-menu-item">
               <Link to="/cart" className="nav-link">
-                Cart
+                Cart<CartContext.Consumer>
+                  {value=>{
+                    const{cartList}=value
+                      const cartLength = cartList.length;
+                    return cartList.length>0?<span className="cartLength">{cartLength}</span>:null
+                  }}
+                </CartContext.Consumer>
               </Link>
             </li>
           </ul>

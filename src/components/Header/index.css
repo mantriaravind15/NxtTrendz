@@ -163,3 +163,17 @@
 .nav-bar-image {
   width: 24px;
 }
+
+.cartLength {
+  
+  margin-left: 4px;
+  padding: 0 6px;
+  background-color: #1575cf; /* bright red badge */
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 20px;
+  border-radius: 10px; /* pill shape */
+margin-bottom: 4px;
+  text-align: center;
+}

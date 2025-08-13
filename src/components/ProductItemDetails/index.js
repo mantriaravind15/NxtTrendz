@@ -1,5 +1,7 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+
 import Cookies from "js-cookie";
 
 import { BsPlusSquare, BsDashSquare } from "react-icons/bs";
@@ -16,6 +18,15 @@ const apiStatusConstants = {
   failure: "FAILURE",
   inProgress: "IN_PROGRESS",
 };
+
+
+function withRouter(Component) {
+  return props => {
+    const params = useParams();
+    return <Component {...props} params={params} />;
+  };
+}
+
 
 class ProductItemDetails extends Component {
   state = {
@@ -42,11 +53,12 @@ class ProductItemDetails extends Component {
   });
 
   getProductData = async () => {
+    const{id}=this.props.params
     this.setState({
       apiStatus: apiStatusConstants.inProgress,
     });
     const jwtToken = Cookies.get("jwt_token");
-    const apiUrl = `https://apis.ccbp.in/products/11`;
+    const apiUrl = `https://apis.ccbp.in/products/${id}`;
     const options = {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
@@ -223,4 +235,6 @@ class ProductItemDetails extends Component {
   }
 }
 
-export default ProductItemDetails;
+
+
+export default withRouter(ProductItemDetails);

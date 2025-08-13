@@ -1,0 +1,70 @@
+/* Container for entire cart page */
+.cart-container {
+  min-height: 80vh;
+  padding: 20px;
+  background-color: #f9fafb;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Cart content box */
+.cart-content-container {
+  width: 100%;
+  max-width: 900px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* My Cart heading */
+.cart-heading {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #1f2937;
+}
+
+/* Remove All button */
+.remove-all-btn {
+  background-color: transparent;
+  border: 1px solid #447def;
+  color: #447def;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: all 0.2s ease-in-out;
+}
+
+.remove-all-btn:hover {
+  background-color: #447def;
+  color: #ffffff;
+}
+
+/* When cart is empty */
+.empty-cart-container {
+  text-align: center;
+  padding: 40px;
+  color: #6b7280;
+}
+
+.empty-cart-container img {
+  max-width: 200px;
+  margin-bottom: 20px;
+}
+
+.empty-cart-container h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.cart-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

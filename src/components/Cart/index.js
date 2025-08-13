@@ -23,7 +23,8 @@ const Cart = () => (
               <EmptyCartView />
             ) : (
               <div className="cart-content-container">
-                <h1 className="cart-heading">My Cart</h1>
+                <div className="cart-header">
+                   <h1 className="cart-heading">My Cart</h1>
                 <button
                   type="button"
                   className="remove-all-btn"
@@ -31,6 +32,7 @@ const Cart = () => (
                 >
                   Remove All
                 </button>
+                </div>
                 <CartListView />
                 <CartSummary />
               </div>

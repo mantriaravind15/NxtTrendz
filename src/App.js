@@ -8,6 +8,8 @@ import Home from "./components/Home";
 import Products from "./components/Products";
 import ProductItemDetails from "./components/ProductItemDetails";
 import CartContext from "./Context";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Payment from "./components/Payment";
 
 class App extends Component {
   state = {
@@ -97,12 +99,51 @@ class App extends Component {
           removeAllCartItems: this.removeAllCartItems,
         }}
       >
-        <Routes>
+      <Routes>
+          {/* Public Route */}
           <Route path="/login" element={<LoginForm />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/:id" element={<ProductItemDetails />} />
-          <Route path="/cart" element={<Cart />} />
+
+          {/* Protected Routes */}
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/products"
+            element={
+              <ProtectedRoute>
+                <Products />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/products/:id"
+            element={
+              <ProtectedRoute>
+                <ProductItemDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <ProtectedRoute>
+                <Cart />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/payment"
+            element={
+              <ProtectedRoute>
+                <Payment />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </CartContext.Provider>
     );
